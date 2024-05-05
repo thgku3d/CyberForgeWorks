@@ -1,18 +1,15 @@
-function detectCycle(head) {
-  let slow = head;
-  let fast = head;
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (slow === fast) {
-      let p1 = head;
-      let p2 = slow;
-      while (p1 !== p2) {
-        p1 = p1.next;
-        p2 = p2.next;
-      }
-      return p1;
+function merge(intervals) {
+  intervals.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const interval of intervals) {
+    if (!merged.length || merged[merged.length - 1][1] < interval[0]) {
+      merged.push(interval);
+    } else {
+      merged[merged.length - 1][1] = Math.max(
+        merged[merged.length - 1][1],
+        interval[1],
+      );
     }
   }
-  return null;
+  return merged;
 }
