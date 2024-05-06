@@ -1,15 +1,10 @@
-function merge(intervals) {
-  intervals.sort((a, b) => a[0] - b[0]);
-  const merged = [];
-  for (const interval of intervals) {
-    if (!merged.length || merged[merged.length - 1][1] < interval[0]) {
-      merged.push(interval);
-    } else {
-      merged[merged.length - 1][1] = Math.max(
-        merged[merged.length - 1][1],
-        interval[1],
-      );
+function coinChange(coins, amount) {
+  const dp = new Array(amount + 1).fill(Infinity);
+  dp[0] = 0;
+  for (const coin of coins) {
+    for (let i = coin; i <= amount; i++) {
+      dp[i] = Math.min(dp[i], dp[i - coin] + 1);
     }
   }
-  return merged;
+  return dp[amount] === Infinity ? -1 : dp[amount];
 }
