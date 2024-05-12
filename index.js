@@ -1,17 +1,17 @@
-function allPathsSourceTarget(graph) {
+function levelOrderBottom(root) {
+  if (!root) return [];
   const result = [];
-  const target = graph.length - 1;
-  dfs(graph, 0, [0]);
-  function dfs(graph, node, path) {
-    if (node === target) {
-      result.push([...path]);
-      return;
+  const queue = [root];
+  while (queue.length) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      currentLevel.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-    for (const neighbor of graph[node]) {
-      path.push(neighbor);
-      dfs(graph, neighbor, path);
-      path.pop();
-    }
+    result.unshift(currentLevel);
   }
   return result;
 }
